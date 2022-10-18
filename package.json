@@ -1,0 +1,10 @@
+{
+  "name": "ioprodz",
+  "version": "1.0.0",
+  "description": "the ioprodz platform",
+  "main": "index.js",
+  "repository": "git@github.com:ioprodz/ioprodz.git",
+  "author": "ioprodz (contact@ioprodz.com)",
+  "license": "MIT",
+  "private": false
+}
