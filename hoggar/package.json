@@ -1,0 +1,11 @@
+{
+  "name": "hoggar",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "concurrently 'tsc -p tsconfig.json --watch' 'npx nodemon dist/index.js --watch'"
+  }
+}
