@@ -1,17 +1,17 @@
-# ioprodz
+# 🔥 ioprodz
 
 Main repository of the ioprodz platform, holding the codebase of the different apps that power the platform.
 
 This is a monorepo, learn more about them [here](https://monorepo.tools/)
 
-## Working with the project
+## 👷 Working with the project
 
-### Pre-required tools
+### 🔨 Pre-required tools
 
 - Source control : [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Package & dependency managment : [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
 
-### Running locally
+### 🚀 Running locally
 
 1. cloning the project and navigating to the working directory:
 
@@ -45,6 +45,6 @@ This is a monorepo, learn more about them [here](https://monorepo.tools/)
    yarn dev:<app-name>
    ```
 
-### Contributing to ioprodz
+### 🖋️ Contributing to ioprodz
 
 Please find guidelines on how to contribute in the [CONTRIBUTING](CONTRIBUTING.md) section
