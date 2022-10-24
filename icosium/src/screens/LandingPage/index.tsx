@@ -77,11 +77,18 @@ export const LandingPage: React.FC = () => {
                 data-wow-delay="0.6s"
               >
                 The mentoring platform is under developpment, you can follow as
-                early as you want by joining our Discord and Github, we are
-                trying to share the maximum of the experience by opensourcing
-                the project, doing public discussions and live streams, but you
-                can also choose just to be notified when the platform is ready.
-                we promise not use your email to send junk.
+                early as you want by joining our{" "}
+                <a className="text-sky-600" href={linkDiscord}>
+                  Discord
+                </a>{" "}
+                and{" "}
+                <a className="text-sky-600" href={linkGithub}>
+                  Github
+                </a>
+                , we are trying to share the maximum of the experience by
+                opensourcing the project, doing public discussions and live
+                streams, but you can also choose just to be notified when the
+                platform is ready. we promise not use your email to send junk.
               </p>
               <form>
                 <div className="wow fadeInDown" data-wow-delay="0.3s">
