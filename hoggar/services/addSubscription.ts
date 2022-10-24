@@ -15,8 +15,9 @@ export async function addSubscription(email: string) {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        return "already subscribed !!!";
+        throw new Error("duplicate_email");
       }
+
     }
     throw error;
   }
