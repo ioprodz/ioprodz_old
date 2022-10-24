@@ -30,4 +30,5 @@ model Subscription {
   updatedAt DateTime @updatedAt
 
   email String @unique
+  source String
 }
