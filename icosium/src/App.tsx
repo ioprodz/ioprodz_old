@@ -1,13 +1,8 @@
 import React from "react";
-
-import { LandingPage } from "./screens/LandingPage";
+import { Routes } from "./Routes";
 
 const App: React.FC = () => {
-  return (
-    <>
-      <LandingPage />
-    </>
-  );
+  return <Routes />;
 };
 
 export default App;
