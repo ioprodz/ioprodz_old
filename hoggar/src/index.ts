@@ -16,10 +16,8 @@ app.get("/", (_: Request, res: Response) => {
   res.send("HELLO WORLD!👋👋");
 });
 app.post("/subscription", async (req: Request, res: Response) => {
-  console.log(req.body.email);
-  const email = req.body.email;
-  console.log(email);
-  const added = await addSubscription(email)
+  const { email, source } = req.body;
+  const added = await addSubscription(email, source)
     .then((response: any) => {
       return response;
     })

@@ -15,6 +15,6 @@ model Subscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String @unique
-  source String
+  email  String  @unique
+  source String?
 }
