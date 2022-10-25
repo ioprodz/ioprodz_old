@@ -96,10 +96,7 @@ export const LandingPage: React.FC = () => {
                     name="email"
                     placeholder="Email Address"
                   />
-                  <button
-                    className="border-0 bg-blue-600 text-white rounded-full px-6 h-12 duration-300 hover:opacity-75"
-                    onClick={() => i18n.changeLanguage("fr")}
-                  >
+                  <button className="border-0 bg-blue-600 text-white rounded-full px-6 h-12 duration-300 hover:opacity-75">
                     {t<string>("subscribe")}
                   </button>
                 </div>
