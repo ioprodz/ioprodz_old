@@ -14,7 +14,7 @@ const linkYoutube = "https://www.youtube.com/channel/UCzPXNCAmW1rVDh_933-cTHQ";
 const linkfacebook = "https://facebook.com/ioprodz";
 
 export const LandingPage: React.FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <>
