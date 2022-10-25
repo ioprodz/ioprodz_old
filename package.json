@@ -14,7 +14,9 @@
     "eject:icosium": "cd icosium && yarn eject",
     "dev:hoggar": "cd hoggar && yarn dev",
     "build:hoggar": "cd hoggar && yarn build",
-    "start:hoggar": " cd hoggar && yarn start"
+    "start:hoggar": " cd hoggar && yarn start",
+    "generate:hoggar": "cd hoggar && npx prisma generate",
+    "migrate:hoggar": "cd hoggar && npx prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",
