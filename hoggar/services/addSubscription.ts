@@ -7,10 +7,8 @@ enum Errors {
 }
 
 export async function addSubscription(email: string, source: string) {
-  const data = {
-    email: email,
-    source: source,
-  };
+  const data = { email, source };
+
   try {
     const subscriber = await prisma.subscription.create({
       data: data,
