@@ -3,9 +3,10 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 const prisma = new PrismaClient();
 
-export async function addSubscription(email: string) {
+export async function addSubscription(email: string, source: string) {
   const data = {
     email: email,
+    source: source,
   };
   try {
     const subscriber = await prisma.subscription.create({
@@ -15,9 +16,8 @@ export async function addSubscription(email: string) {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        throw new Error("duplicate_email");
+        return error.code;
       }
-
     }
     throw error;
   }
