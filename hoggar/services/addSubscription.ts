@@ -1,7 +1,10 @@
-import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
-const prisma = new PrismaClient();
+import { prisma } from "./prisma";
+
+enum Errors {
+  DUPLICATE_ENTRY = "DUPLICATE_ENTRY",
+}
 
 export async function addSubscription(email: string, source: string) {
   const data = {
@@ -16,7 +19,7 @@ export async function addSubscription(email: string, source: string) {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
-        return new Error("duplicate_email");
+        throw new Error(Errors.DUPLICATE_ENTRY);
       }
     }
     throw error;
