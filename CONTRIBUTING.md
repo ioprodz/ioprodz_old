@@ -27,19 +27,54 @@ When you are assigned an issue, you should:
 
 ### 📨 Checking in code
 
-#### Commits
+#### Branching, Commits and pushes
 
+- all work must be done on a feature branch.
 - Commits should be small
-- commit message conventions (TBD)
+- commit message conventions:
+  ```
+  type(scope): description
+  ```
+  examples:
+  ```
+  feat(icosium): added like button
+  fix(hoggar): added missing validation rule
+  chore(docs): documented new api endpoint
+  refactor(icosium): split long function in to small
+  ```
+- No direct pushes to `main`
 
 #### ⏫ Pull requests
 
 - should be always `rebased` and have no conflicts with main.
 - when done working, Pull request shoud be passed from Draft to Ready, and have reviewers assigned.
-- Once you have 2 approuvals, you can sqash and merge your changes.
+- Once you have 2 approuvals, you can squash and merge your changes.
 
-### 🕵️ Code reviews
+### 🕵️ Code checks and reviews
 
-guide lines TBD.
+- When a pull-request is open, it will under go a set of automatic checks (CI). The status of these checks can be checked at the bottom of the conversations, they have to pass in order to request a review and merge.
+
+- Reviews are mandatory and their goal is:
+  - Learn and be informed on what is changing on the code-base
+  - Ensure the changes are withing the scope of the issue
+  - Respect the architecture
+  - Spot issues related to security, introduction of useless dependencies
+  - Avoid over-engineering
+
+### Dev Workflow
+
+```mermaid
+flowchart TD
+Issue --Create--> Branch
+Branch --Create/Update--> Pull-Request
+Pull-Request --Request--> Review
+Review --Validated--> Main
+Branch--Checkout/Pull--> Dev
+Dev --Update & push--> Branch
+Review --Rejected--> Dev
+Main--Pull Changes-->Dev
+```
+
+Note: this flow-chart is made with [mermaid](https://mermaid-js.github.io/mermaid)
 
 Go back to [README.md](README.md)
