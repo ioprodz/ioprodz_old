@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
+
 import imgLogo from "../../assets/logo-rectangle.webp";
 import Discord from "./discord";
 import Facebook from "./facebook";
@@ -12,6 +14,8 @@ const linkYoutube = "https://www.youtube.com/channel/UCzPXNCAmW1rVDh_933-cTHQ";
 const linkfacebook = "https://facebook.com/ioprodz";
 
 export const LandingPage: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <header id="header-wrap" className="relative">
@@ -68,16 +72,13 @@ export const LandingPage: React.FC = () => {
                 className="mb-3 section-heading wow fadeInUp"
                 data-wow-delay="0.3s"
               >
-                We're looking forward to build a mentoring platform that is
-                suitable to the algerian tech industry, and gather a community
-                that is reputable by the quality and standards.
+                {t<string>("sub_title")}
               </h4>
               <p
                 className="mb-4 text-gray-600 leading-loose text-sm wow fadeInUp"
                 data-wow-delay="0.6s"
               >
-                The mentoring platform is under developpment, you can follow as
-                early as you want by joining our{" "}
+                {t<string>("about_us_p1")}
                 <a className="text-sky-600" href={linkDiscord}>
                   Discord
                 </a>{" "}
@@ -85,10 +86,7 @@ export const LandingPage: React.FC = () => {
                 <a className="text-sky-600" href={linkGithub}>
                   Github
                 </a>
-                , we are trying to share the maximum of the experience by
-                opensourcing the project, doing public discussions and live
-                streams, but you can also choose just to be notified when the
-                platform is ready. we promise not use your email to send junk.
+                {t<string>("about_us_p2")}
               </p>
               <form>
                 <div className="wow fadeInDown" data-wow-delay="0.3s">
@@ -98,11 +96,8 @@ export const LandingPage: React.FC = () => {
                     name="email"
                     placeholder="Email Address"
                   />
-                  <button
-                    className="border-0 bg-blue-600 text-white rounded-full px-6 h-12 duration-300 hover:opacity-75"
-                    type="submit"
-                  >
-                    Tell me when it's ready
+                  <button className="border-0 bg-blue-600 text-white rounded-full px-6 h-12 duration-300 hover:opacity-75">
+                    {t<string>("subscribe")}
                   </button>
                 </div>
               </form>
