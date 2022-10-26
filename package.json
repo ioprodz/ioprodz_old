@@ -19,7 +19,7 @@
     "migrate:hoggar": "cd hoggar && npx prisma migrate deploy",
     "test:hoggar": "cd hoggar && yarn test --runInBand",
     "lint:hoggar": " yarn run eslint hoggar/src hoggar/services hoggar/test",
-    "lint:icosium": " yarn run eslint isosium/src  "
+    "lint:icosium": " yarn run eslint icosium/src  "
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",

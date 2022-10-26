@@ -11,7 +11,7 @@ jobs:
       - name: Install depedencies
         run: yarn
       - name: Lint
-        run: yarn lint:hoggar && lint:icosium
+        run: yarn lint:hoggar && yarn lint:icosium
       - name: prisma setup
         run: yarn generate:hoggar && yarn migrate:hoggar
         env:
