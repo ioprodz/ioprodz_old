@@ -6,6 +6,26 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/src/index.js",
-    "dev": "concurrently \"tsc -p tsconfig.json --watch\" \"npx nodemon dist/src/index.js --watch\""
+    "dev": "concurrently \"tsc -p tsconfig.json --watch\" \"npx nodemon dist/src/index.js --watch\"",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@prisma/client": "4.5.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "roots": [
+      "./test",
+      "./src"
+    ],
+    "testMatch": [
+      "**/*.test.ts"
+    ],
+    "setupFiles": [
+      "dotenv/config"
+    ]
   }
 }

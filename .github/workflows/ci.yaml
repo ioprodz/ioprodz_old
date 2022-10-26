@@ -14,3 +14,11 @@ jobs:
         run: yarn build:hoggar
       - name: Build icosium
         run: yarn build:icosium
+
+      - name: prisma setup
+        run: yarn generate:hoggar && yarn migrate:hoggar
+        env:
+          DATABASE_URL: file:data/dev.db
+
+      - name: test hoggar
+        run: yarn test:hoggar
