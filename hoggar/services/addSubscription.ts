@@ -15,10 +15,11 @@ export async function addSubscription(email: string, source: string) {
     });
     return subscriber;
   } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        throw new Error(Errors.DUPLICATE_ENTRY);
-      }
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      throw { message: "email already exist", type: Errors.DUPLICATE_ENTRY };
     }
     throw error;
   }

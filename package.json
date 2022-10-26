@@ -17,7 +17,8 @@
     "start:hoggar": " cd hoggar && yarn start",
     "generate:hoggar": "cd hoggar && npx prisma generate",
     "migrate:hoggar": "cd hoggar && npx prisma migrate deploy",
-    "test:hoggar": "cd hoggar && yarn test"
+    "test:hoggar": "cd hoggar && yarn test --runInBand"
+    
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",

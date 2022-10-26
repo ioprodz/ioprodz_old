@@ -4,63 +4,63 @@ import cors from "cors";
 import bodyParser from "body-parser";
 
 import { addSubscription } from "../services";
-import { mixed, object, string } from "yup";
+import { object, string } from "yup";
 
 const app: Express = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get("/", (_: Request, res: Response) => {
   res.send("HELLO WORLD!👋👋");
 });
 
-enum SOURCE {
-  FACEBOOK = "facebook",
-  DISCORD = "discord",
-  GITHUB = "github",
-}
-
 const subscriberSchema = object({
   body: object({
     email: string().email().required(),
-  }),
-  query: object({
-    source: mixed().oneOf(Object.values(SOURCE)),
+    source: string(),
   }),
 });
 
 //middleware for validating requests
 const validate =
-  (schema: any) => async (req: Request, res: Response, next: NextFunction) => {
+  (schema: any) => async (req: Request, _: Response, next: NextFunction) => {
     try {
       await schema.validate({
         body: req.body,
-        query: req.query,
-        params: req.params,
       });
       return next();
     } catch (err) {
-      return res.status(500).json({ type: err.name, message: err.message });
+      next({ status: 403, type: err.name, message: err.message });
     }
   };
 
 app.post(
   "/subscription",
   validate(subscriberSchema),
-  async (req: Request, res: Response) => {
-    const { email } = req.body;
-    const { source } = req.query;
-
-    const added = await addSubscription(email, source?.toString() || "")
-      .then((response: any) => {
-        return response;
-      })
-      .catch((e: any) => {
-        return { error: e.message };
-      });
-    res.status(201).send(added);
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { email, source } = req.body;
+    try {
+      const added = await addSubscription(email, source);
+      res.status(201).send(added);
+    } catch (e: any) {
+      next({ ...e, status: 409 });
+    }
   }
 );
+
+type HttpError = {
+  status: number;
+  message: string;
+  type: string;
+  url: string;
+};
+
+app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
+  error.url = req.url;
+
+  res.status(error.status).json(error);
+});
 
 export default app;
