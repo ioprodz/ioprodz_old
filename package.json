@@ -17,8 +17,9 @@
     "start:hoggar": " cd hoggar && yarn start",
     "generate:hoggar": "cd hoggar && npx prisma generate",
     "migrate:hoggar": "cd hoggar && npx prisma migrate deploy",
-    "test:hoggar": "cd hoggar && yarn test --runInBand"
-    
+    "test:hoggar": "cd hoggar && yarn test --runInBand",
+    "lint:hoggar": " yarn run eslint hoggar/src hoggar/services hoggar/test",
+    "lint:icosium": " yarn run eslint isosium/src  "
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",
@@ -50,8 +51,12 @@
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "autoprefixer": "^10.4.12",
     "concurrently": "^7.5.0",
+    "eslint": "^8.26.0",
+    "eslint-plugin-react": "^7.31.10",
     "jest": "^29.2.2",
     "nodemon": "^2.0.20",
     "postcss": "^8.4.18",

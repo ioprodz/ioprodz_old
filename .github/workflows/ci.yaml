@@ -10,15 +10,11 @@ jobs:
       - uses: actions/setup-node@v2
       - name: Install depedencies
         run: yarn
-      - name: Build hoggar
-        run: yarn build:hoggar
-      - name: Build icosium
-        run: yarn build:icosium
-
+      - name: Lint
+        run: yarn lint:hoggar && lint:icosium
       - name: prisma setup
         run: yarn generate:hoggar && yarn migrate:hoggar
         env:
           DATABASE_URL: file:data/dev.db
-
       - name: test hoggar
         run: yarn test:hoggar
