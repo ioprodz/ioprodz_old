@@ -2,6 +2,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 import { prisma } from "./prisma";
 
+
 enum Errors {
   DUPLICATE_ENTRY = "DUPLICATE_ENTRY",
 }
