@@ -4,7 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 
 import { addSubscription } from "../services";
-import { object, string } from "yup";
+import { mixed, object, string } from "yup";
 
 const app: Express = express();
 
@@ -14,13 +14,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/", (_: Request, res: Response) => {
   res.send("HELLO WORLD!👋👋");
 });
+
+enum SOURCE {
+  FACEBOOK = "facebook",
+  DISCORD = "discord",
+  GITHUB = "github",
+}
+
 const subscriberSchema = object({
   body: object({
     email: string().email().required(),
-    source: string(),
   }),
-  params: object({
-    id: string(),
+  query: object({
+    source: mixed().oneOf(Object.values(SOURCE)),
   }),
 });
 
@@ -43,8 +49,10 @@ app.post(
   "/subscription",
   validate(subscriberSchema),
   async (req: Request, res: Response) => {
-    const { email, source } = req.body;
-    const added = await addSubscription(email, source)
+    const { email } = req.body;
+    const { source } = req.query;
+
+    const added = await addSubscription(email, source?.toString() || "")
       .then((response: any) => {
         return response;
       })
