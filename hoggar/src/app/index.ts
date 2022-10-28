@@ -21,7 +21,10 @@ type HttpError = {
 };
 
 import subscription from "../subscription/routes";
+import auth from "../auth/routes";
 app.use(subscription);
+
+app.use(auth);
 
 app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
   error.url = req.url;
