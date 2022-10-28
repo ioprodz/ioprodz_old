@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { dburl } from "../src/config";
+import { dburl } from "../app/config";
 
 export const prisma = new PrismaClient({
   datasources: {

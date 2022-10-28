@@ -18,7 +18,7 @@
     "generate:hoggar": "cd hoggar && npx prisma generate",
     "migrate:hoggar": "cd hoggar && npx prisma migrate deploy",
     "test:hoggar": "cd hoggar && yarn test --runInBand",
-    "lint:hoggar": " yarn run eslint hoggar/src hoggar/services hoggar/test",
+    "lint:hoggar": " yarn run eslint hoggar/src hoggar/test",
     "lint:icosium": " yarn run eslint icosium/src  "
   },
   "dependencies": {

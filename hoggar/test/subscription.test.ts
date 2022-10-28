@@ -1,7 +1,7 @@
 import { agent } from "supertest";
 import app from "../src/app";
 
-import { prisma } from "../services/prisma";
+import { prisma } from "../src/db/prisma";
 
 describe("POST /subscription", () => {
   beforeEach(async () => {
