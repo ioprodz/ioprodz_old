@@ -43,7 +43,7 @@ jobs:
   ci-icosium:
     runs-on: ubuntu-latest
     needs: change-scope-filter
-    if: needs.change-scope-filter.outputs.hoggar == 'true'
+    if: needs.change-scope-filter.outputs.icosium == 'true'
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
