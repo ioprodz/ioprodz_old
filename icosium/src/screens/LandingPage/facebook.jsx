@@ -1,7 +1,7 @@
 import React from "react";
 
-function Facebook(props) {
-  const title = props.title || "facebook";
+function Facebook() {
+  const title = "facebook";
 
   return (
     <svg

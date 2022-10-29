@@ -37,13 +37,73 @@ This is a monorepo, learn more about them [here](https://monorepo.tools/)
 
 3. commands
 
-   App names available : `icosium`
+   App names available :
+
+   - `hoggar` : server
+   - `icosium` : web client
 
    run for develoment in watch mode
 
    ```sh
-   yarn dev:<app-name>
+   yarn <app-name>:dev
    ```
+
+   run tests
+
+   ```sh
+   yarn <app-name>:test
+   yarn <app-name>:test --watch # for watch mode
+   ```
+
+   run linter
+
+   ```sh
+   yarn <app-name>:lint
+   yarn <app-name>:lint --fix # to autofix issues
+   ```
+
+   #### Hoggar specific commands
+
+   generate the prisma client
+
+   ```sh
+   yarn hoggar:generate
+   ```
+
+   migrate the db schema
+
+   ```sh
+   yarn hoggar:generate
+   ```
+
+   #### Building and running for production
+
+   build app
+
+   ```sh
+   yarn <app-name>:build
+   ```
+
+   start the build
+
+   ```sh
+   yarn <app-name>:start
+   ```
+
+#### Project commands
+
+run linter on all apps
+
+```sh
+yarn project:dev
+yarn project:dev --fix # to autofix issues
+```
+
+clean project from build files and node_modules
+
+```sh
+yarn project:clean
+```
 
 ### 🖋️ Contributing to ioprodz
 

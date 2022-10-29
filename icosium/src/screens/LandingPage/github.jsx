@@ -1,7 +1,7 @@
 import React from "react";
 
-function Github(props) {
-  const title = props.title || "github";
+function Github() {
+  const title = "github";
 
   return (
     <svg

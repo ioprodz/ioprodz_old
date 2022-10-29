@@ -1,7 +1,7 @@
 import React from "react";
 
-function Discord(props) {
-  const title = props.title || "discord";
+function Discord() {
+  const title = "discord";
 
   return (
     <svg

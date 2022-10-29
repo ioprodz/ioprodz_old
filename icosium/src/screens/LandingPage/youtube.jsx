@@ -1,7 +1,7 @@
 import React from "react";
 
-function Youtube(props) {
-  const title = props.title || "youtube";
+function Youtube() {
+  const title = "youtube";
 
   return (
     <svg
