@@ -23,10 +23,18 @@ type HttpError = {
 import subscription from "../subscription/routes";
 app.use(subscription);
 
-app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
-  error.url = req.url;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use(
+  (error: HttpError, req: Request, res: Response,
 
-  res.status(error.status).json(error);
-});
+
+
+
+    _next: NextFunction) => {
+    error.url = req.url;
+
+    res.status(error.status).json(error);
+  }
+);
 
 export default app;
