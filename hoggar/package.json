@@ -7,7 +7,8 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "dev": "concurrently \"tsc -p tsconfig.json --watch\" \"npx nodemon dist/index.js --watch\"",
-    "test": "jest"
+    "test": "jest",
+    "lint": " yarn run eslint src test"
   },
   "dependencies": {
     "@prisma/client": "4.5.0",
