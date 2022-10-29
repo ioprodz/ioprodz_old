@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
 
 import imgLogo from "../../assets/logo-rectangle.webp";
 import Discord from "./discord";
@@ -54,6 +55,9 @@ export const LandingPage: React.FC = () => {
       <section id="hero-area" className=" bg-slate-50 pt-48 pb-10">
         <div className="container mx-auto">
           <div className="flex justify-between">
+            <a href="https://github.com/login/oauth/authorize?client_id=59bacf304331ecf0c890">
+              Github
+            </a>
             <div className="w-full text-center">
               <h2
                 className="text-4xl font-bold leading-snug text-gray-700 mb-10 wow fadeInUp"
