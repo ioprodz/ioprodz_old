@@ -5,10 +5,9 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/src/index.js",
-    "dev": "concurrently \"tsc -p tsconfig.json --watch\" \"npx nodemon dist/src/index.js --watch\"",
-    "test": "jest",
-    "lint": "eslint src test"
+    "start": "node dist/index.js",
+    "dev": "concurrently \"tsc -p tsconfig.json --watch\" \"npx nodemon dist/index.js --watch\"",
+    "test": "jest"
   },
   "dependencies": {
     "@prisma/client": "4.5.0",
