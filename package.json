@@ -13,6 +13,7 @@
     "icosium:start": "cd icosium && yarn start",
     "icosium:test": "cd icosium && yarn test",
     "icosium:lint": "cd icosium && yarn lint",
+    "icosium:format": "cd icosium && yarn format",
     "hoggar:dev": "cd hoggar && yarn dev",
     "hoggar:build": "cd hoggar && yarn build",
     "hoggar:start": " cd hoggar && yarn start",
@@ -20,9 +21,11 @@
     "hoggar:migrate": "cd hoggar && npx prisma migrate deploy",
     "hoggar:test": "cd hoggar && yarn test --runInBand",
     "hoggar:lint": "cd hoggar && yarn lint",
+    "hoggar:format": "cd hoggar && yarn format",
     "project:clean": "rm -rf node_modules hoggar/node_modules hoggar/dist icosium/node_modules icosium/build",
     "project:lint": "yarn hoggar:lint && yarn icosium:lint",
     "project:lint:fix": "yarn hoggar:lint --fix && yarn icosium:lint --fix",
+    "project:format": "yarn hoggar:format && yarn icosium:format",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -30,6 +33,9 @@
     "lint-staged": "^13.0.3"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "yarn project:lint:fix"
+    "*.{ts,tsx}": [
+      "yarn project:lint:fix",
+      "yarn project:format"
+    ]
   }
 }

@@ -25,12 +25,7 @@ app.use(subscription);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use(
-  (error: HttpError, req: Request, res: Response,
-
-
-
-
-    _next: NextFunction) => {
+  (error: HttpError, req: Request, res: Response, _next: NextFunction) => {
     error.url = req.url;
 
     res.status(error.status).json(error);
