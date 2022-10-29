@@ -1,4 +1,4 @@
 dist
 .env
 # database files
-prisma/data/dev.db
+prisma/data/**
