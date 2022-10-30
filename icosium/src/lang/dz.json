@@ -1,0 +1,18 @@
+{
+  "LandingPage": {
+    "headline": "Mentoring bech tebda fel business... khfif drif!",
+    "subscribe": "Khebrouni ki tefriwha",
+    "sub_title": "Rana habin nekhedmou plateforme te3 mentoring li twalem el marché algérien, we tkoun 3endna jma3a li ma3roufa b la qualité we les standards",
+    "emailPlaceHolder": "l'email te3ek",
+    "about_us_p1": "Rana mazal ndevlopiw fel la platform, tegder tji tebe3 m3ana fi ",
+    "alreadySubscribed": "l'email hada deja kayen 3endna",
+    "emailNotValid": "l'email mahouch valid",
+    "subscriptionSuccess": "Sahite!",
+    "or": " wella ",
+    "about_us_p2": ", Rana nseyiw ndirou koulech open-source, les discussion fel publique wella des livestream. Bessah tegder tani tkhayar bech ne3elmouk ki koulech ykoun wajed. we bien sur maneste3mlouch lemail te3ek lel spam.",
+    "find_us": "telgawna hna"
+  },
+  "shared": {
+    "serverError": "srat erreur fel serveur."
+  }
+}
