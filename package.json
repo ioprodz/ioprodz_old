@@ -23,5 +23,8 @@
     "project:clean": "rm -rf node_modules hoggar/node_modules hoggar/dist icosium/node_modules icosium/build",
     "project:lint": "yarn hoggar:lint && yarn icosium:lint",
     "project:lint:fix": "yarn hoggar:lint --fix && yarn icosium:lint --fix"
+  },
+  "dependencies": {
+    "axios": "^1.1.3"
   }
 }
