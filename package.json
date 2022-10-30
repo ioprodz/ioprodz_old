@@ -17,6 +17,7 @@
     "hoggar:build": "cd hoggar && yarn build",
     "hoggar:start": " cd hoggar && yarn start",
     "hoggar:generate": "cd hoggar && npx prisma generate",
+    "hoggar:migrate:create": "cd hoggar && npx prisma migrate dev",
     "hoggar:migrate": "cd hoggar && npx prisma migrate deploy",
     "hoggar:test": "cd hoggar && yarn test --runInBand",
     "hoggar:lint": "cd hoggar && yarn lint",

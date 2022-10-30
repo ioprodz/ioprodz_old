@@ -18,3 +18,18 @@ model Subscription {
   email  String  @unique
   source String?
 }
+
+model Indentity {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  provider   String
+  providerId String
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
