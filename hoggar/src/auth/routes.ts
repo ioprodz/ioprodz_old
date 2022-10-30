@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import axios from "axios";
 
-const CLIENT_ID = "6bacd8943692208dfe77";
+import { CLIENT_SERCET } from "src/app/config";
+import { CLIENT_ID } from "src/app/config";
 
 const auth = Router();
 
@@ -22,7 +23,7 @@ auth.get(
     const { code } = req.query;
     const params = {
       client_id: CLIENT_ID,
-      client_secret: "bd59bd86c0d12106f3afe9cf29b99c5460a62547",
+      client_secret: CLIENT_SERCET,
       code: code,
     };
     const token = await axios
