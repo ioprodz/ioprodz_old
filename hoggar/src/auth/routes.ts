@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { prisma } from "../db/prisma";
-
 import { getAccessToken, getAuthUrl, getUserData } from "./github-api";
 
 const auth = Router();
@@ -17,9 +16,11 @@ auth.get(
     try {
       const { data: ghAccessToken } = await getAccessToken(code as string);
       const { data } = await getUserData(extreactToken(ghAccessToken));
+      console.log(data);
       let identity = await prisma.indentity.findFirst({
         where: { provider: "github", providerId: `${data.id}` },
       });
+      console.log(identity);
       if (!identity) {
         identity = await prisma.indentity.create({
           data: {
@@ -35,6 +36,7 @@ auth.get(
       // access_token --> jwt
       // refresh --> create session in db --> jwt
 
+      console.log(identity);
       res.status(200).json({
         access_token: "dqsdqsqsdq",
         refresh_token: "dqsdqsdqsdqds",
