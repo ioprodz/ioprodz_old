@@ -27,7 +27,6 @@ app.use(subscription);
 app.use(
   (error: HttpError, req: Request, res: Response, _next: NextFunction) => {
     error.url = req.url;
-
     res.status(error.status).json(error);
   }
 );

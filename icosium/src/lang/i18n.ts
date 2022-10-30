@@ -6,6 +6,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import en from "./en.json";
 import fr from "./fr.json";
 import ar from "./ar.json";
+import dz from "./dz.json";
 
 const options = {
   order: [
@@ -30,6 +31,9 @@ const resources = {
   },
   ar: {
     translation: ar,
+  },
+  dz: {
+    translation: dz,
   },
 };
 

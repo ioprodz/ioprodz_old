@@ -15,10 +15,9 @@ export async function addSubscription(email: string, source: string) {
   const data = { email, source };
   try {
     subscriberSchema.validateSync(data);
-    const subscriber = await prisma.subscription.create({
-      data: data,
+    return await prisma.subscription.create({
+      data,
     });
-    return subscriber;
   } catch (error) {
     if (
       error instanceof PrismaClientKnownRequestError &&

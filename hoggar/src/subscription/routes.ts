@@ -13,8 +13,10 @@ subscription.post(
     } catch (e: any) {
       if (e.name === "ValidationError") {
         next({ ...e, status: 403 });
+        return;
       }
       next({ ...e, status: 409 });
+      return;
     }
   }
 );
