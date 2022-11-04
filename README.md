@@ -73,7 +73,7 @@ This is a monorepo, learn more about them [here](https://monorepo.tools/)
    migrate the db schema
 
    ```sh
-   yarn hoggar:generate
+   yarn hoggar:migrate
    ```
 
    #### Building and running for production
@@ -95,8 +95,14 @@ This is a monorepo, learn more about them [here](https://monorepo.tools/)
 run linter on all apps
 
 ```sh
-yarn project:dev
-yarn project:dev --fix # to autofix issues
+yarn project:lint
+yarn project:lint --fix # to autofix issues
+```
+
+run formatter on all apps
+
+```sh
+yarn project:format
 ```
 
 clean project from build files and node_modules

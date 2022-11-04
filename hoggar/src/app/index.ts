@@ -25,6 +25,7 @@ import auth from "../auth/routes";
 
 app.use(subscription);
 
+
 app.use("/auth", auth);
 
 app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
@@ -32,5 +33,6 @@ app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
 
   res.status(error.status).json(error);
 });
+
 
 export default app;

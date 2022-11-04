@@ -1,6 +1,17 @@
 {
-  "subscribe": "Dis moi quand c'est prêt",
-  "sub_title": "Nous sommes impatients de construire une plateforme de mentorat adaptée à l'industrie technologique algérienne et de rassembler une communauté réputée par la qualité et les normes.",
-  "about_us_p1": " La plateforme de mentorat est en cours de développement, vous pouvez suivre aussi tôt que vous le souhaitez en rejoignant notre",
-  "about_us_p2": ", nous essayons de partager le maximum d'expérience en opensourceant le projet, en faisant des discussions publiques et des diffusions en direct, mais vous pouvez également choisir d'être simplement averti lorsque la plateforme est prête. nous nous engageons à ne pas utiliser votre e-mail pour envoyer du courrier indésirable."
+  "LandingPage": {
+    "headline": "LE Mentoring pour vous placer dans le business... rapidement!",
+    "subscribe": "Dites moi quand c'est prêt",
+    "sub_title": "Nous sommes en train de construire une plateforme de mentorat adaptée à l'industrie technologique algérienne et de rassembler une communauté réputée par la qualité et les normes.",
+    "about_us_p1": "La plateforme de mentorat est en cours de développement, vous pouvez suivre aussi tôt que vous le souhaitez en rejoignant notre ",
+    "about_us_p2": ", nous essayons de partager le maximum d'expérience en opensourceant le projet, en faisant des discussions publiques et des diffusions en direct, mais vous pouvez également choisir d'être simplement averti lorsque la plateforme est prête. nous nous engageons à ne pas utiliser votre e-mail pour envoyer du courrier indésirable.",
+    "emailPlaceHolder": "Adresse email",
+    "alreadySubscribed": "Cet email éxiste déja dans notre liste",
+    "emailNotValid": "L'email fourni n'est pas valide",
+    "or": " ou ",
+    "subscriptionSuccess": "Merci bien, on vous recontacterons dès que c'est pret."
+  },
+  "shared": {
+    "serverError": "Une erreur s'est passé sur le serveur."
+  }
 }
