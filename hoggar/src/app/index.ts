@@ -22,6 +22,7 @@ type HttpError = {
 
 import subscription from "../subscription/routes";
 import auth from "../auth/routes";
+
 app.use(subscription);
 
 app.use("/auth", auth);
