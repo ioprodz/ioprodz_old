@@ -31,13 +31,20 @@ describe("/auth (authentication)", () => {
     });
     describe("GET /auth/github/callback?code=:code", () => {
       it("should return 403 if code not present", async () => {
+        const res = await agent(app)
+          .get("/auth/github/callback")
+          .set("user-agent", "test-ua");
+        expect(res.statusCode).toBe(403);
+      });
+
+      it("should return 403 if code not present", async () => {
         const res = await agent(app).get("/auth/github/callback");
         expect(res.statusCode).toBe(403);
       });
       it("should return 401 if code does not authenticate with github", async () => {
-        const res = await agent(app).get(
-          "/auth/github/callback?code=fake-code"
-        );
+        const res = await agent(app)
+          .get("/auth/github/callback?code=fake-code")
+          .set("user-agent", "test-ua");
         expect(res.statusCode).toBe(401);
       });
       it("should return 201 and create user if he does not exist", async () => {
