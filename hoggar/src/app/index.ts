@@ -1,10 +1,11 @@
 import express, { Express, NextFunction, Request, Response } from "express";
-
+import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 
 const app: Express = express();
 
+if (typeof it !== "function") app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,7 +26,6 @@ import auth from "../auth/routes";
 
 app.use(subscription);
 
-
 app.use("/auth", auth);
 
 app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
@@ -33,6 +33,5 @@ app.use((error: HttpError, req: Request, res: Response, _: NextFunction) => {
 
   res.status(error.status).json(error);
 });
-
 
 export default app;

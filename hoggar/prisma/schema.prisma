@@ -19,17 +19,40 @@ model Subscription {
   source String?
 }
 
-model Indentity {
+model Identity {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   provider   String
   providerId String
+  email      String    @unique
+  Session    Session[]
+  Profile    Profile?
 }
 
-model Profile {
+model Session {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  uaIdentifier String
+  identity     Identity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+  identityId   String
+}
+
+model Profile {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  identity   Identity @relation(fields: [identityId], references: [id], onDelete: Cascade)
+  identityId String   @unique
+
+  name       String
+  bio        String @default("")
+  githubUser String @default("")
+  avatarUrl  String @default("")
+  websiteUrl String @default("")
+  location   String @default("")
+  company    String @default("")
 }

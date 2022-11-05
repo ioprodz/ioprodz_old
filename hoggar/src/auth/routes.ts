@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { prisma } from "../db/prisma";
-import { getAccessToken, getAuthUrl, getUserData } from "./github-api";
-
+import jwt from "jsonwebtoken";
+import { getAccessToken, getAuthUrl, getUserData } from "./github-api.service";
 const auth = Router();
 
 auth.get("/github", (_: Request, res: Response) => {
@@ -12,43 +12,70 @@ auth.get(
   "/github/callback",
   async (req: Request, res: Response, next: NextFunction) => {
     const { code } = req.query;
+    if (!code) {
+      next({ status: 403 });
+      return;
+    }
 
     try {
-      const { data: ghAccessToken } = await getAccessToken(code as string);
-      const { data } = await getUserData(extreactToken(ghAccessToken));
-      console.log(data);
-      let identity = await prisma.indentity.findFirst({
+      const ghAccessToken = await getAccessToken(code as string);
+      const { data } = await getUserData(ghAccessToken);
+      let identity = await prisma.identity.findFirst({
         where: { provider: "github", providerId: `${data.id}` },
       });
-      console.log(identity);
       if (!identity) {
-        identity = await prisma.indentity.create({
+        identity = await prisma.identity.create({
           data: {
             provider: "github",
             providerId: data.id + "",
+            email: data.email,
           },
         });
       }
+      const profileData = {
+        identityId: identity.id,
+        name: data.name,
+        bio: data.bio || "",
+        githubUser: data.login,
+        avatarUrl: data.avatar_url || "",
+        websiteUrl: data.blog || "",
+        location: data.location || "",
+        company: data.company || "",
+      };
+      await prisma.profile.upsert({
+        where: {
+          identityId: identity.id,
+        },
+        update: profileData,
+        create: profileData,
+      });
 
-      // upsert profile ...
+      const session = await prisma.session.create({
+        data: {
+          uaIdentifier: req.headers["user-agent"] as string,
+          identityId: identity.id,
+        },
+      });
 
-      // generate tokens
-      // access_token --> jwt
-      // refresh --> create session in db --> jwt
+      const access_token = jwt.sign({ sub: identity.id }, "secret", {
+        expiresIn: 300, // 5 minutes
+      });
+      const refresh_token = jwt.sign(
+        { sub: identity.id, sid: session.id },
+        "secret",
+        {
+          expiresIn: "1d",
+        }
+      );
 
-      console.log(identity);
-      res.status(200).json({
-        access_token: "dqsdqsqsdq",
-        refresh_token: "dqsdqsdqsdqds",
+      res.status(201).json({
+        access_token,
+        refresh_token,
       });
     } catch (e) {
-      console.log("erefqsdfqsd", e);
       next({ ...e, status: 401 });
     }
   }
 );
-
-const extreactToken = (data: string): string =>
-  (data.split("=")[1] as string).split("&")[0] as string;
 
 export default auth;
