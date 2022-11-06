@@ -48,6 +48,34 @@ describe("/auth (authentication)", () => {
           .set("user-agent", "test-ua");
         expect(res.statusCode).toBe(401);
       });
+
+      it("should return 401 if user exists but disabled", async () => {
+        MOCK_getAccessToken.mockResolvedValue("fake-gh-access-token");
+        MOCK_getUserData.mockResolvedValue({
+          data: {
+            id: "12345",
+            email: "fake-email@example.com",
+            name: "Mokhtar",
+          },
+        });
+        const existingIdentity = await prisma.identity.create({
+          data: {
+            provider: "github",
+            providerId: "12345",
+            email: "fake-email@example.com",
+            active: false,
+          },
+        });
+        await prisma.profile.create({
+          data: { identityId: existingIdentity.id, name: "Hmida" },
+        });
+        const res = await agent(app)
+          .get("/auth/github/callback?code=fake-code")
+          .set("user-agent", "fake-ua-string");
+        expect(MOCK_getAccessToken).toHaveBeenCalledWith("fake-code");
+        expect(MOCK_getUserData).toHaveBeenCalledWith("fake-gh-access-token");
+        expect(res.statusCode).toBe(401);
+      });
       it("should return 201 and create user if he does not exist", async () => {
         MOCK_getAccessToken.mockResolvedValue("fake-gh-access-token");
         MOCK_getUserData.mockResolvedValue({

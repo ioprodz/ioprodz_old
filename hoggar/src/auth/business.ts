@@ -21,6 +21,9 @@ export async function ensureIdentityByProvider(
       },
     });
   }
+  if (!identity.active) {
+    throw new Error("account_disabled");
+  }
   return identity;
 }
 
