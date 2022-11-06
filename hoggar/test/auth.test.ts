@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 mockModule("../src/app/config", {
   authGithubClientId: "fake-github-client-id",
   authJWTSecret: "fake-jwt-secret",
+  authCookieSecret: "fake-cookie-secret",
 });
 
 const MOCK_getAccessToken = jest.fn();
@@ -151,7 +152,7 @@ describe("/auth (authentication)", () => {
         expect(profile[0]).toHaveProperty("name", "Mokhtar");
       });
 
-      it("should return 201 and create session + generate tokens", async () => {
+      it("should return 201 and create session + generate tokens + set cookie", async () => {
         MOCK_getAccessToken.mockResolvedValue("fake-gh-access-token");
         MOCK_getUserData.mockResolvedValue({
           data: {
@@ -162,7 +163,8 @@ describe("/auth (authentication)", () => {
         });
         const res = await agent(app)
           .get("/auth/github/callback?code=fake-code")
-          .set("user-agent", "fake-ua-string");
+          .set("user-agent", "fake-ua-string")
+          .expect("set-cookie", /access_token=.*; Path=\/; HttpOnly/);
         expect(MOCK_getAccessToken).toHaveBeenCalledWith("fake-code");
         expect(MOCK_getUserData).toHaveBeenCalledWith("fake-gh-access-token");
         expect(res.statusCode).toBe(201);
@@ -313,7 +315,7 @@ describe("/auth (authentication)", () => {
         .send({ refresh_token: valid_rft });
       expect(res.statusCode).toBe(401);
     });
-    it("should return 201 issue new tokens", async () => {
+    it("should return 201 issue new tokens and sets cookie", async () => {
       const identity = await prisma.identity.create({
         data: {
           email: "johndoe@example.com",
@@ -335,7 +337,8 @@ describe("/auth (authentication)", () => {
       const res = await agent(app)
         .post("/auth/refresh")
         .set("user-agent", "user-agent-string")
-        .send({ refresh_token: valid_rft });
+        .send({ refresh_token: valid_rft })
+        .expect("set-cookie", /access_token=.*; Path=\/; HttpOnly/);
       expect(res.statusCode).toBe(201);
       expect(res.body).toHaveProperty("access_token");
       expect(res.body).toHaveProperty("refresh_token");

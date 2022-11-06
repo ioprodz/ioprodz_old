@@ -7,6 +7,9 @@ import {
   refreshToken,
   updateProfileByIdentityId,
 } from "./business";
+
+import config from "../app/config";
+const { authCookieConfig } = config;
 const auth = Router();
 
 auth.get("/github", (_: Request, res: Response) => {
@@ -33,7 +36,10 @@ auth.get(
       );
       await updateProfileByIdentityId(identity.id, githubProfileAdapter(data));
       const tokens = await createSessionForIdentity(identity.id, userAgent);
-      res.status(201).json(tokens);
+      res
+        .cookie("access_token", tokens.access_token, authCookieConfig)
+        .status(201)
+        .json(tokens);
     } catch (e) {
       next({ ...e, status: 401 });
     }
@@ -51,7 +57,10 @@ auth.post(
     }
     try {
       const tokens = await refreshToken(refresh_token, userAgent);
-      res.status(201).json(tokens);
+      res
+        .cookie("access_token", tokens.access_token, authCookieConfig)
+        .status(201)
+        .json(tokens);
     } catch (e) {
       next({ status: 401, message: e.message });
     }

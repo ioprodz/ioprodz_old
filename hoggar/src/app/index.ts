@@ -2,11 +2,17 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+
+import config from "./config";
+
+const { authCookieSecret } = config;
 
 const app: Express = express();
 
 if (typeof it !== "function") app.use(morgan("dev"));
 app.use(cors());
+app.use(cookieParser(authCookieSecret));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

@@ -114,10 +114,10 @@ export async function refreshToken(token: string, uaIdentifier: string) {
     throw new Error("invalid_token_payload");
   }
   const identity = await prisma.identity.findFirstOrThrow({
-    where: { id: sub as string, active: true },
+    where: { id: sub, active: true },
   });
   const session = await prisma.session.findFirstOrThrow({
-    where: { id: sid as string, uaIdentifier },
+    where: { id: sid, uaIdentifier },
   });
   if (Math.floor(session.updatedAt.getTime() / 1000) !== iat) {
     throw new Error("token_revoked");
