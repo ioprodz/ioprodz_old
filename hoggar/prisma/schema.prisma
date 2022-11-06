@@ -27,6 +27,7 @@ model Identity {
   provider   String
   providerId String
   email      String    @unique
+  active     Boolean   @default(true)
   Session    Session[]
   Profile    Profile?
 }

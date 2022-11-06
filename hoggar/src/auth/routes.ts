@@ -4,6 +4,7 @@ import {
   createSessionForIdentity,
   ensureIdentityByProvider,
   githubProfileAdapter,
+  refreshToken,
   updateProfileByIdentityId,
 } from "./business";
 const auth = Router();
@@ -27,7 +28,7 @@ auth.get(
       const { data } = await getUserData(ghAccessToken);
       const identity = await ensureIdentityByProvider(
         "github",
-        data.id,
+        `${data.id}`,
         data.email
       );
       await updateProfileByIdentityId(identity.id, githubProfileAdapter(data));
@@ -35,6 +36,24 @@ auth.get(
       res.status(201).json(tokens);
     } catch (e) {
       next({ ...e, status: 401 });
+    }
+  }
+);
+
+auth.post(
+  "/refresh",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { refresh_token } = req.body;
+    const userAgent = req.headers["user-agent"];
+    if (!refresh_token || !userAgent) {
+      next({ status: 403 });
+      return;
+    }
+    try {
+      const tokens = await refreshToken(refresh_token, userAgent);
+      res.status(201).json(tokens);
+    } catch (e) {
+      next({ status: 401, message: e.message });
     }
   }
 );

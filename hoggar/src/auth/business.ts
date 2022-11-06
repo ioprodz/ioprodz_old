@@ -1,6 +1,8 @@
 import { Identity } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { prisma } from "../db/prisma";
+import config from "../app/config";
+const { authJWTSecret } = config;
 
 export async function ensureIdentityByProvider(
   provider: string,
@@ -77,15 +79,49 @@ export async function createSessionForIdentity(
     },
   });
 
-  const access_token = jwt.sign({ sub: identityId }, "secret", {
+  return generateTokens(identityId, session.id);
+}
+
+function generateTokens(identityId: string, sessionId: string) {
+  const access_token = jwt.sign({ sub: identityId }, authJWTSecret, {
     expiresIn: 300, // 5 minutes
   });
   const refresh_token = jwt.sign(
-    { sub: identityId, sid: session.id },
-    "secret",
+    { sub: identityId, sid: sessionId },
+    authJWTSecret,
     {
       expiresIn: "1d",
     }
   );
   return { access_token, refresh_token };
+}
+
+type RefreshTokenPayload = {
+  sub: string;
+  sid: string;
+  iat: number;
+};
+
+export async function refreshToken(token: string, uaIdentifier: string) {
+  const { sub, sid, iat } = jwt.verify(
+    token,
+    authJWTSecret
+  ) as RefreshTokenPayload;
+  if (!sub || !sid) {
+    throw new Error("invalid_token_payload");
+  }
+  const identity = await prisma.identity.findFirstOrThrow({
+    where: { id: sub as string, active: true },
+  });
+  const session = await prisma.session.findFirstOrThrow({
+    where: { id: sid as string, uaIdentifier },
+  });
+  if (Math.floor(session.updatedAt.getTime() / 1000) !== iat) {
+    throw new Error("token_revoked");
+  }
+  await prisma.session.update({
+    where: { id: session.id },
+    data: { updatedAt: new Date() },
+  });
+  return generateTokens(identity.id, session.id);
 }

@@ -14,7 +14,8 @@ CREATE TABLE "Identity" (
     "updatedAt" DATETIME NOT NULL,
     "provider" TEXT NOT NULL,
     "providerId" TEXT NOT NULL,
-    "email" TEXT NOT NULL
+    "email" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL DEFAULT true
 );
 
 -- CreateTable

@@ -3,6 +3,7 @@ import { mockModule } from "./utils";
 import jwt from "jsonwebtoken";
 mockModule("../src/app/config", {
   authGithubClientId: "fake-github-client-id",
+  authJWTSecret: "fake-jwt-secret",
 });
 
 const MOCK_getAccessToken = jest.fn();
@@ -152,6 +153,170 @@ describe("/auth (authentication)", () => {
         expect(decoded_refresh_token).toHaveProperty("sub", identity.id);
         expect(decoded_refresh_token).toHaveProperty("sid", session.id);
       });
+    });
+  });
+
+  describe("POST /auth/refresh", () => {
+    it("should return 403 and error when no token is provided", async () => {
+      const res = await agent(app).post("/auth/refresh");
+      expect(res.statusCode).toBe(403);
+    });
+    it("should return 403 and error when no user-agent is provided", async () => {
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .send({ refresh_token: "some-token" });
+      expect(res.statusCode).toBe(403);
+    });
+    it("should return 401 and error when token is invalid", async () => {
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "user-agent-string")
+        .send({ refresh_token: "invalid-token" });
+      expect(res.statusCode).toBe(401);
+    });
+    it("should return 401 and error when identity not found", async () => {
+      const payload = {
+        sub: "fake-identity",
+        sid: "fake-session-id",
+      };
+      const refresh_token = jwt.sign(payload, "fake-jwt-secret");
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "user-agent-string")
+        .send({ refresh_token });
+      expect(res.statusCode).toBe(401);
+    });
+    it("should return 401 and error when identity is disabled", async () => {
+      const identity = await prisma.identity.create({
+        data: {
+          email: "johndoe@example.com",
+          providerId: "12345",
+          provider: "github",
+          active: false,
+        },
+      });
+      const session = await prisma.session.create({
+        data: {
+          identityId: identity.id,
+          uaIdentifier: "user-agent-string",
+        },
+      });
+      const payload = {
+        sub: identity.id,
+        sid: session.id,
+      };
+      const valid_rft = jwt.sign(payload, "fake-jwt-secret");
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "user-agent-string")
+        .send({ refresh_token: valid_rft });
+      expect(res.statusCode).toBe(401);
+    });
+    it("should return 401 and error when session not found", async () => {
+      const identity = await prisma.identity.create({
+        data: {
+          email: "johndoe@example.com",
+          providerId: "12345",
+          provider: "github",
+        },
+      });
+      const payload = {
+        sub: identity.id,
+        sid: "fake-session-id",
+      };
+      const refresh_token = jwt.sign(payload, "fake-jwt-secret");
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "user-agent-string")
+        .send({ refresh_token });
+      expect(res.statusCode).toBe(401);
+    });
+
+    it("should return 401 when user agent does not match", async () => {
+      const identity = await prisma.identity.create({
+        data: {
+          email: "johndoe@example.com",
+          providerId: "12345",
+          provider: "github",
+        },
+      });
+      const session = await prisma.session.create({
+        data: {
+          identityId: identity.id,
+          uaIdentifier: "user-agent-string",
+        },
+      });
+      const payload = {
+        sub: identity.id,
+        sid: session.id,
+      };
+      const valid_rft = jwt.sign(payload, "fake-jwt-secret");
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "other-user-agent")
+        .send({ refresh_token: valid_rft });
+      expect(res.statusCode).toBe(401);
+    });
+    it("should return 401 when token does not match iat (already used)", async () => {
+      const identity = await prisma.identity.create({
+        data: {
+          email: "johndoe@example.com",
+          providerId: "12345",
+          provider: "github",
+        },
+      });
+      const updatedAt = new Date();
+      updatedAt.setSeconds(updatedAt.getSeconds() - 2);
+      const session = await prisma.session.create({
+        data: {
+          identityId: identity.id,
+          uaIdentifier: "user-agent-string",
+          updatedAt,
+        },
+      });
+      const payload = {
+        sub: identity.id,
+        sid: session.id,
+      };
+      const valid_rft = jwt.sign(payload, "fake-jwt-secret");
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "user-agent-string")
+        .send({ refresh_token: valid_rft });
+      expect(res.statusCode).toBe(401);
+    });
+    it("should return 201 issue new tokens", async () => {
+      const identity = await prisma.identity.create({
+        data: {
+          email: "johndoe@example.com",
+          providerId: "12345",
+          provider: "github",
+        },
+      });
+      const session = await prisma.session.create({
+        data: {
+          identityId: identity.id,
+          uaIdentifier: "user-agent-string",
+        },
+      });
+      const payload = {
+        sub: identity.id,
+        sid: session.id,
+      };
+      const valid_rft = jwt.sign(payload, "fake-jwt-secret");
+      const res = await agent(app)
+        .post("/auth/refresh")
+        .set("user-agent", "user-agent-string")
+        .send({ refresh_token: valid_rft });
+      expect(res.statusCode).toBe(201);
+      expect(res.body).toHaveProperty("access_token");
+      expect(res.body).toHaveProperty("refresh_token");
+      const { access_token, refresh_token } = res.body;
+      const decoded_act = jwt.decode(access_token);
+      const decoded_rft = jwt.decode(refresh_token);
+      expect(decoded_act).toHaveProperty("sub", identity.id);
+      expect(decoded_rft).toHaveProperty("sub", identity.id);
+      expect(decoded_rft).toHaveProperty("sid", session.id);
     });
   });
 });
