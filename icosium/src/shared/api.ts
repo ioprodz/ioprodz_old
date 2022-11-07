@@ -1,4 +1,14 @@
 import axios from "axios";
 import { baseUrl } from "./config";
 
-export const api = axios.create({ baseURL: baseUrl });
+export const apiClient = axios.create({
+  baseURL: baseUrl,
+  withCredentials: true,
+});
+
+apiClient.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    throw error.response;
+  }
+);
