@@ -36,6 +36,7 @@ auth.get(
         data.email
       );
       await updateProfileByIdentityId(identity.id, githubProfileAdapter(data));
+
       const tokens = await createSessionForIdentity(identity.id, userAgent);
       res
         .cookie("access_token", tokens.access_token, authCookieConfig)
