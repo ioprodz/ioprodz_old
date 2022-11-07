@@ -11,7 +11,7 @@ const { authCookieSecret } = config;
 const app: Express = express();
 
 if (typeof it !== "function") app.use(morgan("dev"));
-app.use(cors());
+app.use(cors({ credentials: true, origin: [/localhost/] }));
 app.use(cookieParser(authCookieSecret));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,9 +28,11 @@ type HttpError = {
 };
 
 import subscription from "../subscription/routes";
+import profile from "../profile/routes";
 import auth from "../auth/routes";
 
 app.use(subscription);
+app.use(profile);
 
 app.use("/auth", auth);
 
