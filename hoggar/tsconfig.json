@@ -2,9 +2,7 @@
   "compilerOptions": {
     "module": "CommonJS",
     // project options
-    "lib": [
-      "ESNext",
-    ], // specifies which default set of type definitions to use ("DOM", "ES6", etc)
+    "lib": ["ESNext"], // specifies which default set of type definitions to use ("DOM", "ES6", etc)
     "outDir": "dist", // .js (as well as .d.ts, .js.map, etc.) files will be emitted into this directory.,
     "removeComments": true, // Strips all comments from TypeScript files when converting into JavaScript- you rarely read compiled code so this saves space
     "target": "ESNext", // Target environment. Most modern browsers support ES6, but you may want to set it to newer or older. (defaults to ES3)
@@ -32,8 +30,9 @@
     "noUnusedParameters": true // Report errors on unused parameters in functions
   },
   "files": ["./src/index.ts"],
-  "include": ["./src/**/*.ts"],
-  "exclude": [
-    "node_modules/**/*"
-  ]
+  "include": ["./src/**/*.ts", "./test/**/*.ts"],
+  "exclude": ["node_modules/**/*"],
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
 }
