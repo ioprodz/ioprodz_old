@@ -38,6 +38,7 @@ auth.get(
       const tokens = await createSessionForIdentity(identity.id, userAgent);
       res
         .cookie("access_token", tokens.access_token, authCookieConfig)
+        .cookie("refresh_token", tokens.refresh_token, authCookieConfig)
         .status(201)
         .json(tokens);
     } catch (e) {
@@ -59,6 +60,7 @@ auth.post(
       const tokens = await refreshToken(refresh_token, userAgent);
       res
         .cookie("access_token", tokens.access_token, authCookieConfig)
+        .cookie("refresh_token", tokens.refresh_token, authCookieConfig)
         .status(201)
         .json(tokens);
     } catch (e) {

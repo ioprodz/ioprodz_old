@@ -11,12 +11,13 @@ const { authCookieSecret } = config;
 const app: Express = express();
 
 if (typeof it !== "function") app.use(morgan("dev"));
-app.use(cors());
+app.use(cors({ credentials: true, origin: [/localhost/] }));
 app.use(cookieParser(authCookieSecret));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (_: Request, res: Response) => {
+  forceRefreshIdentity("9252243a-8f0d-43e6-a61b-3a8f2fae598d");
   res.send("HELLO WORLD!👋👋");
 });
 
@@ -28,9 +29,12 @@ type HttpError = {
 };
 
 import subscription from "../subscription/routes";
+import profile from "../profile/routes";
 import auth from "../auth/routes";
+import { forceRefreshIdentity } from "../auth/jwtGuard.middleware";
 
 app.use(subscription);
+app.use(profile);
 
 app.use("/auth", auth);
 
