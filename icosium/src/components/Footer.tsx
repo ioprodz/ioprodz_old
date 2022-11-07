@@ -1,6 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { linkGithub, linkDiscord, linkYoutube, linkfacebook } from "../urls";
+import {
+  linkGithub,
+  linkDiscord,
+  linkYoutube,
+  linkfacebook,
+} from "../screens/LandingPage/urls";
 import Discord from "./discord";
 import Facebook from "./facebook";
 import Github from "./github";
