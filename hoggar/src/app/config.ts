@@ -5,6 +5,7 @@ dotenv.config();
 const config: {
   port: number;
   hostname: string;
+  corsOrigins: string;
   dburl: string;
   authGithubClientId: string;
   authGithubClientSecret: string;
@@ -19,6 +20,7 @@ const config: {
   // App
   port: parseInt(process.env.PORT || "8000", 10),
   hostname: process.env.HOSTNAME || "localhost",
+  corsOrigins: process.env.CORS_ORIGINS || "localhost",
 
   // Db
   dburl: process.env.DATABASE_URL || "file:data/db.sqlite",
