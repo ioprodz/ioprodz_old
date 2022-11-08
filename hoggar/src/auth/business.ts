@@ -48,7 +48,7 @@ export type ProfileDto = {
 };
 export function githubProfileAdapter(data: GithubUserData): ProfileDto {
   return {
-    name: data.name,
+    name: data.name || data.login,
     bio: data.bio || "",
     githubUser: data.login,
     avatarUrl: data.avatar_url || "",
