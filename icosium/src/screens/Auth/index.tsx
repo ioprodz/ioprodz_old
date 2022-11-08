@@ -14,7 +14,7 @@ export const Auth: React.FC = () => {
           <h1 className="text-3xl pt-8">Login</h1>
           <a
             className="block border-2 border-gray-400 w-full text-center pt-2 text-2xl h-14 mt-5 rounded   hover:border-black"
-            href="http://localhost:8000/auth/github"
+            href={`${process.env.REACT_APP_API_URL}/auth/github`}
           >
             Github
           </a>
