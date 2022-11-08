@@ -29,6 +29,7 @@ auth.get(
     try {
       const ghAccessToken = await getAccessToken(code as string);
       const { data } = await getUserData(ghAccessToken);
+      console.log(data);
       const identity = await ensureIdentityByProvider(
         "github",
         `${data.id}`,
@@ -40,8 +41,10 @@ auth.get(
         .cookie("access_token", tokens.access_token, authCookieConfig)
         .cookie("refresh_token", tokens.refresh_token, authCookieConfig)
         .status(201)
-        .json(tokens);
+        .redirect("http://localhost:3000");
     } catch (e) {
+      console.log(e);
+      console.log(e.message);
       next({ ...e, status: 401 });
     }
   }
