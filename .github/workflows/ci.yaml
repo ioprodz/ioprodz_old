@@ -34,12 +34,18 @@ jobs:
         run: yarn
       - name: Lint
         run: yarn hoggar:lint
-      - name: Setup db
+      - name: Postgres - launch dockerized db
+        run: cd hoggar && docker compose up -d
+      - name: Prisma - Generate Client && Migrate
         run: yarn hoggar:generate && yarn hoggar:migrate
         env:
-          DATABASE_URL: file:data/db.sqlite
+          DATABASE_URL: postgresql://postgres:postgress@localhost:5432/postgres
       - name: Test
-        run: yarn hoggar:test
+        env:
+          DATABASE_URL: postgresql://postgres:postgress@localhost:5432/postgres
+        run: echo $DATABASE_URL && yarn hoggar:test
+      - name: Postgres - stop dockerized db
+        run: cd hoggar && docker compose down
   ci-icosium:
     runs-on: ubuntu-latest
     needs: change-scope-filter
