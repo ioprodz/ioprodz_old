@@ -19,10 +19,10 @@ jobs:
           filters: |
             hoggar:
               - 'hoggar/**'
-              - '.github/workflows'
+              - '.github/workflows/**'
             icosium:
-              - 'hoggar/**'
-              - '.github/workflows'
+              - 'icosium/**'
+              - '.github/workflows/**'
   ci-hoggar:
     runs-on: ubuntu-latest
     needs: change-scope-filter
